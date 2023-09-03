@@ -1,0 +1,18 @@
+.navbar-brand{
+    padding-top: 12px;
+} 
+
+.panel-default, .alert{
+    margin-left: 10px;
+    margin-right: 10px;
+} 
+
+.aw-link-panel{
+    float: right;
+    padding-top: 2px;
+}
+
+.aw-titulo-panel{
+    float: left;
+    padding: 0px;
+}
