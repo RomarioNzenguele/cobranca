@@ -2,23 +2,22 @@
 <html lang="pt-PT" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head> 
-    <title>Cobrança</title> 
+<head>
+    <title>Cobrança</title>
 </head>
 
 <body>
 
     <!-- Header  -->
-    <header th:insert="~{Fragments :: header}">
-
-    </header>
+    <header th:insert="~{Fragments :: header}"> </header>
 
     <!-- Content -->
     <section layout:fragment="conteudo">
         <p>Conteúdo principal</p>
     </section>
 
-    <div th:insert="~{Fragments :: jsImports}"></div>
+    <!-- Importando arquivos js  -->
+    <div th:replace="~{Fragments :: jsImports}"></div>
 
 </body>
 

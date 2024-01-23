@@ -1,11 +1,14 @@
-.navbar-brand{
-    padding-top: 12px;
-} 
-
+/* Tela grande */
+@media (min-width: 768px){
 .panel-default, .alert{
     margin-left: 10px;
     margin-right: 10px;
 } 
+
+.navbar-brand{
+    padding-top: 12px;
+} 
+}
 
 .aw-link-panel{
     float: right;

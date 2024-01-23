@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-PT" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{LayoutPadrao.html}">
+<html layout:decorate="~{LayoutPadrao.html}">
 
 <head th:replace="~{Fragments :: head('Pesquisa de Títulos')}">
 </head>
@@ -20,61 +19,72 @@
             </div>
 
             <div class="panel-body">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th class="text-center col-md-1">#</th>
-                            <th>Descrição</th>
-                            <th class="text-center col-md-2">Data de Vencimento</th>
-                            <th class="text-right col-md-2">Valor</th>
-                            <th class="text-center col-md-2">Status</th>
-                            <th class="col-md-1"></th>
-                        </tr>
-                    </thead>
 
-                    <tbody>
-                        <tr th:each=" titulo : ${titulos}">
-                            <td class="text-center" th:text="${titulo.codigo}"></td>
-                            <td th:text="${titulo.descricao}"></td>
-                            <td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
-                            <td class="text-right" th:text="|${{titulo.valor}} Kz|"></td>
-                            <td class="text-center">
-                                <span class="label label-success" th:text="${titulo.status.descricao}"
-                                    th:classappend="${#strings.toString(titulo.pendente) ? 'label-danger' : 'label-success'}"></span>
-                            </td>
-                            <td class="text-center">
-                                <a class="btn btn-link btn-xs js-atualizar-status"
-                                    th:href="@{/titulos/{id}(id=${titulo.codigo})}">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </a>
-                                <a class="btn btn-link btn-xs" data-toggle="modal" data-target="#confirmModalExclusao"
-                                    th:attr="data-codigo=${titulo.codigo}, data-descricao=${titulo.descricao}"
-                                    title="Excluir" rel="tooltip" data-placement="top">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum título foi encotrado!</td>
-                            <td colspan="6" th:if="${!#lists.isEmpty(titulos)}" th:text="'Total: '+ ${titulos.size()}">
-                                foi encotrado!</td>
-                        </tr>
-                    </tbody>
+                <form th:replace="~{Fragments :: formPesquisa}"></form>
 
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <caption>Apresentando todos os titulos da tabela</caption>
+                        <thead>
+                            <tr>
+                                <th class="text-center col-md-1">#</th>
+                                <th>Descrição</th>
+                                <th class="text-center col-md-2">Data de Vencimento</th>
+                                <th class="text-right col-md-2">Valor</th>
+                                <th class="text-center col-md-2">Status</th>
+                                <th class="col-md-1"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each=" titulo : ${titulos}">
+                                <td class="text-center" th:text="${titulo.codigo}"></td>
+                                <td th:text="${titulo.descricao}"></td>
+                                <td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
+                                <td class="text-right" th:text="|${{titulo.valor}} Kz|"></td>
+                                <td class="text-center" th:attr="data-role=${titulo.codigo}">
+                                    <span class="label label-success" th:text="${titulo.status.descricao}"
+                                        th:classappend="${#strings.toString(titulo.pendente) ? 'label-danger' : 'label-success'}"></span>
+                                </td>
+                                <td class="text-center">
+                                    <a class="btn btn-link btn-xs" th:href="@{/titulos/{id}(id=${titulo.codigo})}"
+                                        title="Editar" rel="tooltip" data-placement="top">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                    <a class="btn btn-link btn-xs" data-toggle="modal"
+                                        data-target="#confirmModalExclusao"
+                                        th:attr="data-codigo=${titulo.codigo}, data-descricao=${titulo.descricao}"
+                                        title="Excluir" rel="tooltip" data-placement="top">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+
+                                    <a class="btn btn-link btn-xs js-atualizar-status" th:if="${titulo.pendente}"
+                                        title="Receber" rel="tooltip" data-placement="top"
+                                        th:attr="data-codigo=${titulo.codigo}"
+                                        th:href="@{/titulos/{id}/receber(id=${titulo.codigo})}">
+                                        <span class="glyphicon glyphicon-check"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum título foi encotrado!</td>
+                                <td colspan="6" th:if="${!#lists.isEmpty(titulos)}"
+                                    th:text="'Total: '+ ${titulos.size()}">
+                                    foi encotrado!</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
             </div>
 
-            <!-- Rever esse problema -->
-            <div th:replace="~{ModalFragments:: ModalExclusao}"></div>
+            <!-- Rever o problema na exclusao-->
+            <div th:replace="~{ModalFragments}"></div>
 
 
         </div>
 
     </section>
-
-    <!-- Importando os scripts -->
-    <!-- Rever este problema -->
-    <div th:insert="~{Fragments :: jsImports}"></div>
 
 </body>
 

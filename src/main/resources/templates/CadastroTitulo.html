@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt-PT" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{LayoutPadrao.html}">
+<html layout:decorate="~{LayoutPadrao.html}">
 
-<head th:replace="~{Fragments :: head('Cadastro de Títulos')}"> 
+<head th:replace="~{Fragments :: head('Cadastro de Títulos')}">
 </head>
 
 <section layout:fragment="conteudo">
@@ -11,7 +10,8 @@
 
         <!-- Header  -->
         <div th:replace="~{Fragments :: msgGeral}"></div>
-        <div th:replace="~{Fragments :: msgErro}"></div>
+        <div th:replace="~{Fragments :: msgErro}" th></div>
+      
 
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -36,7 +36,9 @@
                 <div class="form-group" th:classappend="${#fields.hasErrors('dataVencimento')} ? has-error">
                     <label for="dataVencimento" class="col-sm-2 control-label">Data de Vencimento</label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control" id="dataVencimento" th:field="*{dataVencimento}" />
+                        <input type="text" class="form-control" id="dataVencimento" th:field="*{dataVencimento}"
+                            data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
+                            data-date-autoclose="true" data-date-today-highlight="true" />
                     </div>
                 </div>
 
@@ -67,5 +69,6 @@
         </div>
     </form>
 </section>
+
 
 </html>
